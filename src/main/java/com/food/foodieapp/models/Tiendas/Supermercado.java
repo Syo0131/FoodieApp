@@ -19,7 +19,7 @@ public class Supermercado {
 
     private String nombre;
     private String ubicacion;
-    private  Long telefono;
+    private String telefono;
 
 
     @OneToMany(mappedBy = "supermercado", cascade = CascadeType.ALL)
