@@ -1,4 +1,4 @@
-package com.food.foodieapp.models;
+package com.food.foodieapp.models.Usuario;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
