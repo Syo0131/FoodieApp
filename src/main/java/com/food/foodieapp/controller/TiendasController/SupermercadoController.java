@@ -37,6 +37,16 @@ public class SupermercadoController {
         return "redirect:/Supermercado";
     }
 
+   @GetMapping("/Supermercado/Editar")
+   public String editarSupermercado(@RequestParam("id") Long id, Model model){
+        supermercadoRepository.findById(id).ifPresent(supermercado -> model.addAttribute("supermercado", supermercado));
+        return "/Tiendas/Editar";
+   }
+   @PostMapping("/Supermercado/Editar")
+    public String PosteditarSupermercado(@ModelAttribute Supermercado supermercado){
+        supermercadoRepository.save(supermercado);
+        return "redirect:/Supermercado";
+   }
     @GetMapping("/Supermercado/Eliminar")
     public String eliminarSupermercado(@RequestParam("id") Long id, Model model){
         supermercadoRepository.findById(id).ifPresent(supermercado -> model.addAttribute("supermercado", supermercado));

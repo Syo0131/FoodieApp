@@ -5,7 +5,7 @@
         layout:decorate="~{Layout/MainLayout}" lang="es">>
 <body>
 <div layout:fragment="content">
-    <h1 class="text-center">Products</h1>
+    <h1 class="text-center">Productos</h1>
     <a class="btn btn-primary mb-2" href="/Producto/Crear" role="button">Add Product</a>
 
 
@@ -18,14 +18,20 @@
                      style="height: 180px; object-fit: cover; border-top-left-radius: .75rem; border-top-right-radius: .75rem;">
 
                 <div class="card-body p-2 text-center">
-                    <h4 class="card-title mb-2" th:text="${producto.nombre}">Nombre</h4>
-                    <h5 class="card-title mb-2" th:text="${producto.supermercado.nombre}">Nombre</h5>
-                    <h6 class="card-title mb-2" th:text="'RD$ '+ ${#numbers.formatDecimal(producto.precio, 0, 'POINT', 0, 'COMMA')}">Precio</h6>
+                    <h3 class="card-title mb-2" th:text="${producto.nombre}">Nombre</h3>
+                    <h4 class="card-title mb-2" th:text="${producto.supermercado.nombre}">Nombre</h4>
+                    <h5 class="card-title mb-2" th:text="'RD$ '+ ${producto.precio}">Precio</h5>
+                    <h6 class="card-title mb-2"><span th:each="cat, iterStat : ${producto.categorias}"
+                    th:text="${cat.nombre + (iterStat.last ? '' : ', ')}">2</span>
+                    </h6>
+
+
+
 
                 </div>
 
                 <div class="card-footer bg-transparent border-0 text-center pb-3">
-                    <a class="btn btn-outline-primary btn-sm me-1" href="#">Editar</a>
+                    <a class="btn btn-info btn-sm" th:href="@{'/Producto/Editar?id=' + ${producto.id}}">Editar</a>
                     <a th:href="@{'/Producto/Eliminar?id=' + ${producto.id}}" class="btn btn-outline-danger btn-sm">Eliminar</a>
                 </div>
             </div>

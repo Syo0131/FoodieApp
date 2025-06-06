@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html         xmlns:th="http://www.thymeleaf.org"
+              xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+              layout:decorate="~{Layout/MainLayout}" lang="es">
+<div layout:fragment="content">
+  <h2>Editar Supermercado</h2>
+
+  <form th:action="@{/Supermercado/Editar}" th:object="${supermercado}" method="post">
+    <input type="hidden" th:field="*{id}"/>
+
+    <div class="mb-3">
+      <label>Nombre</label>
+      <input type="text" th:field="*{nombre}" class="form-control"/>
+    </div>
+
+    <div class="mb-3">
+      <label>Ubicación</label>
+      <input type="text" th:field="*{ubicacion}" class="form-control"/>
+    </div>
+
+    <div class="mb-3">
+      <label>Teléfono</label>
+      <input type="text" th:field="*{telefono}" class="form-control"/>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+    <a href="/Supermercado" class="btn btn-secondary">Cancelar</a>
+  </form>
+</div>
+</html>

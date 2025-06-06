@@ -29,6 +29,14 @@
       </select>
 
     </div>
+    <div class="col-md-6">
+      <label for="supermercado" class="form-label">Categorias</label>
+      <!--/*@thymesVar id="supermercado" type=""*/-->
+      <label for="categorias"></label><select multiple th:field="*{categorias}" class="form-select" id="categorias">
+        <option th:each="c : ${categorias}" th:value="${c.id}" th:text="${c.nombre}">Categorias</option>
+      </select>
+
+    </div>
 
     <div class="col-12">
       <button type="submit" class="btn btn-primary">Guardar</button>

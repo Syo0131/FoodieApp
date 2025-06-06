@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{Layout/MainLayout}" lang="es">
+<div layout:fragment="content">
+    <h1 class="text-center">Categorias</h1>
+    <a class="btn btn-primary mb-2" href="/Supermercado/Crear" role="button">Agregar categoria</a>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Nombre</th>
+            <th class="text-end pe-5">Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="categorias : ${categorias}">
+            <td th:text="${categorias.nombre}"></td>
+            <td class="text-end">
+                <a class="btn btn-info btn-sm" th:href="@{'/Categorias/Editar?id=' + ${categorias.id}}">Editar</a>
+                <a class="btn btn-danger btn-sm" th:href="@{'/Categorias/Eliminar?id=' + ${categorias.id}}">Eliminar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+</div>
+</html>
