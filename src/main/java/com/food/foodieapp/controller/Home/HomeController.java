@@ -4,11 +4,14 @@ import com.food.foodieapp.models.Producto.Producto;
 import com.food.foodieapp.repositories.Categorias.CategoriaRepository;
 import com.food.foodieapp.repositories.Producto.ProductoRepository;
 import com.food.foodieapp.repositories.Tiendas.SupermercadoRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Collection;
 import java.util.List;
 
 @Controller
@@ -27,7 +30,16 @@ public class HomeController {
     @GetMapping("/Home")
     public String HomeIndex(@RequestParam(required = false) Long categoriaId,
                             @RequestParam(required = false) Long supermercadoId,
-                            Model model) {
+                            Model model, Authentication authentication) {
+
+
+
+        // Verificar el rol
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        boolean isAdmin = authorities.stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+        boolean isUser = authorities.stream().anyMatch(a -> a.getAuthority().equals("ROLE_USER"));
+
+
 
         List<Producto> productos;
 
@@ -49,8 +61,47 @@ public class HomeController {
         model.addAttribute("categoriaId", categoriaId);
         model.addAttribute("supermercadoId", supermercadoId);
 
-        return "/Home/Index";
+
+            return "/Home/Index";
+
+
     }
 
+    @GetMapping("/Admin/Home")
+    public String adminDirecto(@RequestParam(required = false) Long categoriaId,
+                               @RequestParam(required = false) Long supermercadoId,
+                               Model model, Authentication authentication) {
+
+
+
+        // Verificar el rol
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        boolean isAdmin = authorities.stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+        boolean isUser = authorities.stream().anyMatch(a -> a.getAuthority().equals("ROLE_USER"));
+
+
+
+        List<Producto> productos;
+
+        if (categoriaId != null && supermercadoId != null) {
+            productos = productoRepository.findByCategorias_IdAndSupermercado_Id(categoriaId, supermercadoId);
+        } else if (categoriaId != null) {
+            productos = productoRepository.findByCategorias_Id(categoriaId);
+        } else if (supermercadoId != null) {
+            productos = productoRepository.findBySupermercado_Id(supermercadoId);
+        } else {
+            productos = productoRepository.findAll();
+        }
+
+        model.addAttribute("producto", productos);
+        model.addAttribute("categorias", categoriaRepository.findAll());
+        model.addAttribute("supermercado", supermercadoRepository.findAll());
+
+        // Mantener filtros seleccionados
+        model.addAttribute("categoriaId", categoriaId);
+        model.addAttribute("supermercadoId", supermercadoId);
+
+        return  "/Admin/Home";
+    }
 
 }

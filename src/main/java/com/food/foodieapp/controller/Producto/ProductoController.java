@@ -30,11 +30,19 @@ public class ProductoController {
 
 
     @GetMapping("/Producto")
-    public String ProductoHome(Model model)
+    public String ProductoUserHome(Model model)
     {
         model.addAttribute("productos",productoRepository.findAll());
-        return "Producto/Index";
+        return "RolUser/Producto/Index";
     }
+
+    @GetMapping("/Admin/Producto")
+    public String ProductoAdminHome(Model model)
+    {
+        model.addAttribute("productos",productoRepository.findAll());
+        return "Admin/Producto/Index";
+    }
+
 
     @GetMapping("/Producto/Crear")
     public String formulario(Model model )
@@ -43,7 +51,7 @@ public class ProductoController {
         model.addAttribute("productos", new Producto());
         model.addAttribute("supermercados", supermercadoRepository.findAll());
 
-       return "/Producto/Create";
+       return "Admin/Producto/Create";
     }
 
     @PostMapping("/Producto/Crear")
@@ -64,13 +72,13 @@ public class ProductoController {
         producto.setSupermercado(supermercado);
         productoRepository.save(producto);
 
-        return "redirect:/Producto";
+        return "redirect:/Admin/Producto";
     }
 
-    @GetMapping("/Producto/Eliminar")
+    @GetMapping("Admin/Producto/Eliminar")
     public String mostrarConfirmacionEliminar(@RequestParam("id") Long id, Model model) {
         productoRepository.findById(id).ifPresent(producto -> model.addAttribute("producto", producto));
-        return "/Producto/Eliminar"; // Asegúrate de que esta vista existe
+        return "Admin/Producto/Eliminar"; // Asegúrate de que esta vista existe
     }
 
     @GetMapping("/Producto/Editar")
@@ -78,20 +86,20 @@ public class ProductoController {
         model.addAttribute("categorias",categoriaRepository.findAll());
         model.addAttribute("supermercado", supermercadoRepository.findAll());
         productoRepository.findById(id).ifPresent(producto -> model.addAttribute("producto", producto));
-        return "/Producto/Editar";
+        return "Admin/Producto/Editar";
     }
 
     @PostMapping("/Producto/Editar")
     public String editarProducto(@ModelAttribute Producto producto) {
         productoRepository.save(producto);
-        return "redirect:/Producto";
+        return "redirect:/Admin/Producto";
     }
 
 
     @PostMapping("/Producto/Eliminar/{id}")
     public String EliminarProductos(@PathVariable Long id) {
         productoRepository.deleteById(id);
-        return "redirect:/Producto";
+        return "redirect:/Admin/Producto";
     }
 
 }

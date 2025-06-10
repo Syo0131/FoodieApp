@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{Layout/MainLayout}" lang="es">
+<div layout:fragment="content">
+  <h1 class="text-center">Super Mercados</h1>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Ubicación</th>
+      <th>Telefono</th>
+      <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="supermercado : ${supermercados}">
+      <td th:text="${supermercado.nombre}"></td>
+      <td th:text="${supermercado.ubicacion}"></td>
+      <td th:text="${supermercado.telefono}"></td>
+      <td>
+        <a class="btn btn-info btn-sm" th:href="@{'/Supermercado/Editar?id=' + ${supermercado.id}}">Editar</a>
+        <a class="btn btn-danger btn-sm" th:href="@{'/Supermercado/Eliminar?id=' + ${supermercado.id}}">Eliminar</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+
+</div>
+</html>
+
+
+

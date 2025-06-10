@@ -1,55 +1,30 @@
 package com.food.foodieapp.models.Usuario;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
 public class Usuarios {
 
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String Nombre;
-    private String Apellido;
-    private String Correo;
-    private String Password;
 
-//            Get And Set
+    @Column(nullable=false)
+    private String nombre;
+    @Column(nullable=false)
+    private String apellido;
+    @Column(nullable=false)
+    private String correo;
+    @Column(nullable=false)
+    private String password;
+    @Column(unique = true, nullable=false)
+    private String username;
+    @Column(nullable=false)
+    private String rol;
 
-
-//    ID
-   public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
-//    Nombre
-    public String getNombre() {
-        return Nombre;
-    }
-    public void setNombre(String Nombre) {
-        this.Nombre = Nombre;
-    }
-//    Apellido
-    public String getApellido() {
-       return Apellido;
-    }
-    public void setApellido(String Apellido) {
-       this.Apellido = Apellido;
-    }
-//    Correo
-    public String getCorreo() {
-       return Correo;
-    }
-    public void setCorreo(String Correo) {
-       this.Correo = Correo;
-    }
-//    Password
-    public String getPassword() {
-       return Password;
-    }
-    public void setPassword(String Password) {
-       this.Password = Password;
-    }
 }

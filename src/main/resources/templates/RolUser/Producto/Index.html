@@ -5,14 +5,11 @@
         layout:decorate="~{Layout/MainLayout}" lang="es">>
 <body>
 <div layout:fragment="content">
-    <h1 class="text-center">Productos</h1>
-    <a class="btn btn-primary mb-2" href="/Producto/Crear" role="button">Add Product</a>
-
-
+    <h1 class="text-center mt-5">Productos</h1>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
         <div th:each="producto : ${productos}" class="col">
             <div class="card h-100 shadow-sm border-0 rounded-3">
-                <img alt="Imagen de producto"
+                <img th:alt="${producto.nombre}"
                      th:src="${producto.imagen}"
                      class="card-img-top"
                      style="height: 180px; object-fit: cover; border-top-left-radius: .75rem; border-top-right-radius: .75rem;">
@@ -24,15 +21,6 @@
                     <h6 class="card-title mb-2"><span th:each="cat, iterStat : ${producto.categorias}"
                     th:text="${cat.nombre + (iterStat.last ? '' : ', ')}">2</span>
                     </h6>
-
-
-
-
-                </div>
-
-                <div class="card-footer bg-transparent border-0 text-center pb-3">
-                    <a class="btn btn-info btn-sm" th:href="@{'/Producto/Editar?id=' + ${producto.id}}">Editar</a>
-                    <a th:href="@{'/Producto/Eliminar?id=' + ${producto.id}}" class="btn btn-outline-danger btn-sm">Eliminar</a>
                 </div>
             </div>
         </div>

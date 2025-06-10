@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{Layout/MainLayout}" lang="es">
+<div layout:fragment="content">
+    <div class="mt-5">
+
+        <h1>Bienvenido al Admin Home</h1>
+
+        <form method="get" th:action="@{/Admin/Home}" class="row g-2 mb-4">
+            <div class="col-md-5">
+                <label>
+                    <select name="categoriaId" class="form-select">
+                        <option value="" th:selected="${categoriaId == null}">Todas las categorías</option>
+                        <option th:each="cat : ${categorias}"
+                                th:value="${cat.id}"
+                                th:text="${cat.nombre}"
+                                th:selected="${cat.id == categoriaId}">
+                        </option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="col-md-5">
+                <label>
+                    <select name="supermercadoId" class="form-select">
+                        <option value="" th:selected="${supermercadoId == null}">Todos los supermercados</option>
+                        <option th:each="s : ${supermercado}"
+                                th:value="${s.id}"
+                                th:text="${s.nombre}"
+                                th:selected="${s.id == supermercadoId}">
+                        </option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary w-100">Filtrar</button>
+            </div>
+        </form>
+
+        <div class="row row-cols-1 row-cols-md-2 g-4 mt-4">
+            <div th:each="producto : ${producto}" class="col mb-3">
+                <div class="card h-100 shadow-sm border-0 rounded-4">
+                    <img th:src="${producto.imagen}" class="card-img-top" style="height: 200px; object-fit: cover;" th:alt="${producto.nombre}">
+                    <div class="card-body p-2 text-center">
+                        <h3 class="card-title mb-2" th:text="${producto.nombre}">Nombre</h3>
+                        <h4 class="card-title mb-2" th:text="${producto.supermercado.nombre}">Nombre</h4>
+                        <h5 class="card-title mb-2" th:text="'RD$ '+ ${producto.precio}">Precio</h5>
+                        <h6 class="card-title mb-2"><span th:each="cat, iterStat : ${producto.categorias}"
+                                                          th:text="${cat.nombre + (iterStat.last ? '' : ', ')}">2</span>
+                        </h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:if="${#lists.isEmpty(producto)}">
+            <p class="text-center">No se encontraron productos con ese filtro.</p>
+        </div>
+
+    </div>
+
+</div>
+</html>

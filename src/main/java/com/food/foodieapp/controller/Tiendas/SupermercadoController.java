@@ -1,7 +1,6 @@
-package com.food.foodieapp.controller.TiendasController;
+package com.food.foodieapp.controller.Tiendas;
 
 import com.food.foodieapp.models.Tiendas.Supermercado;
-import com.food.foodieapp.repositories.Producto.ProductoRepository;
 import com.food.foodieapp.repositories.Tiendas.SupermercadoRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,9 +18,14 @@ public class SupermercadoController {
 
 
     @GetMapping("/Supermercado")
-    public String SupermercadoHome(Model model) {
+    public String SupermercadoUserHome(Model model) {
         model.addAttribute("supermercados", supermercadoRepository.findAll());
-        return "/Tiendas/Index";
+        return "RolUser/Tiendas/Index";
+    }
+    @GetMapping("/Admin/Supermercado")
+    public String SupermercadoAdminHome(Model model) {
+        model.addAttribute("supermercados", supermercadoRepository.findAll());
+        return "RolUser/Tiendas/Index";
     }
 
 
@@ -29,28 +33,28 @@ public class SupermercadoController {
     @GetMapping("/Supermercado/Crear")
     public String supermercadoformulario( Model model){
         model.addAttribute("supermercado", new Supermercado());
-        return "/Tiendas/Create";
+        return "Admin/Tiendas/Create";
     }
     @PostMapping("/Supermercado/Crear")
     public String GuardarSupermercado(@ModelAttribute Supermercado supermercado){
         supermercadoRepository.save(supermercado);
-        return "redirect:/Supermercado";
+        return "redirect:/Admin/Supermercado";
     }
 
    @GetMapping("/Supermercado/Editar")
    public String editarSupermercado(@RequestParam("id") Long id, Model model){
         supermercadoRepository.findById(id).ifPresent(supermercado -> model.addAttribute("supermercado", supermercado));
-        return "/Tiendas/Editar";
+        return "Admin/Tiendas/Editar";
    }
    @PostMapping("/Supermercado/Editar")
     public String PosteditarSupermercado(@ModelAttribute Supermercado supermercado){
         supermercadoRepository.save(supermercado);
-        return "redirect:/Supermercado";
+        return "redirect:/Admin/Supermercado";
    }
     @GetMapping("/Supermercado/Eliminar")
     public String eliminarSupermercado(@RequestParam("id") Long id, Model model){
         supermercadoRepository.findById(id).ifPresent(supermercado -> model.addAttribute("supermercado", supermercado));
-        return "/Tiendas/Eliminar";
+        return "Admin/Tiendas/Eliminar";
 
     }
 

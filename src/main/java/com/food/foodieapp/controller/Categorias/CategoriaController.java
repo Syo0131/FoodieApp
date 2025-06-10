@@ -14,9 +14,14 @@ public class CategoriaController {
     }
 
     @GetMapping("/Categoria")
-    public String CategoriaHome(Model model) {
+    public String CategoriaUserHome(Model model) {
         model.addAttribute("categorias", categoriaRepository.findAll());
-        return "/Categorias/Index";
+        return "RolUser/Categorias/Index";
+    }
+    @GetMapping("/Admin/Categoria")
+    public String CategoriaAdminHome(Model model) {
+        model.addAttribute("categorias", categoriaRepository.findAll());
+        return "Admin/Categorias/Index";
     }
 
 }
